@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  --primary-color: #0ea5e9; /* Tailwind primary-500 */
+  --primary-dark: #0369a1; /* Tailwind primary-700 */
+  --text-color: #1e293b; /* Tailwind slate-700 */
+  --text-light: #475569; /* Tailwind slate-600 */
+  --bg-color: #f8fafc; /* Tailwind slate-50 */
+  --border-color: #e2e8f0; /* Tailwind slate-200 */
+  --sidebar-width: 288px; /* w-72 */
+  /* --header-height is set dynamically by JS */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sidebar styles */
+#sidebar {
+    width: var(--sidebar-width);
+}
+#sidebar.active { /* For mobile: slide in */
+    transform: translateX(0);
+}
+#sidebarToggle.hidden-important { /* To hide when sidebar is open */
+    display: none !important;
+}
+
+
+/* Table of Contents styles */
+.toc-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.9rem; /* 14px */
+  font-weight: 500;
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+.toc-link:hover {
+  color: var(--primary-color);
+  background-color: #f0f9ff; /* primary-50 */
+}
+
+.toc-link.active {
+  color: var(--primary-dark);
+  font-weight: 600;
+  background-color: #e0f2fe; /* primary-100 */
+}
+
+.toc-section {
+  margin-bottom: 0.75rem;
+}
+
+/* Main Content Typography & Layout */
+#contentContainer {
+  line-height: 1.75; /* More spacious */
+}
+
+#contentContainer > *:first-child {
+    margin-top: 0;
+}
+
+#contentContainer h1, 
+#contentContainer h2, 
+#contentContainer h3, 
+#contentContainer h4, 
+#contentContainer h5, 
+#contentContainer h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: #0f172a; /* slate-900 */
+  scroll-margin-top: calc(var(--header-height) + 1.5rem); /* For in-page links */
+}
+
+#contentContainer h1 {
+  font-size: 2.25rem; /* text-4xl */
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* More space after main title */
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#contentContainer h2 {
+  font-size: 1.875rem; /* text-3xl */
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#contentContainer h3 {
+  font-size: 1.5rem; /* text-2xl */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+#contentContainer h4 {
+  font-size: 1.25rem; /* text-xl */
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+#contentContainer p {
+  margin-bottom: 1.25rem;
+  color: var(--text-color);
+}
+
+#contentContainer ul, 
+#contentContainer ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.75rem; /* More indent */
+}
+#contentContainer ul { list-style-type: disc; }
+#contentContainer ol { list-style-type: decimal; }
+
+#contentContainer li {
+  margin-bottom: 0.625rem; /* Slightly more space between list items */
+}
+#contentContainer li::marker {
+  color: var(--primary-color);
+}
+
+#contentContainer ul ul, #contentContainer ol ol, #contentContainer ul ol, #contentContainer ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#contentContainer blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding: 0.75rem 1.25rem;
+  margin: 1.75rem 0;
+  background-color: #f0f9ff; /* primary-50 */
+  color: #0369a1; /* primary-700 */
+  font-style: normal;
+  border-radius: 0 0.375rem 0.375rem 0;
+}
+#contentContainer blockquote p {
+  margin-bottom: 0.5rem;
+}
+#contentContainer blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+#contentContainer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+#contentContainer a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+#contentContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+#contentContainer th, 
+#contentContainer td {
+  padding: 0.875rem 1.25rem; /* More padding */
+  border: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+#contentContainer th {
+  background-color: #f1f5f9; /* slate-100 */
+  font-weight: 600;
+  color: #0f172a; /* slate-900 */
+}
+#contentContainer tr:nth-child(even) td {
+    background-color: #f8fafc; /* slate-50 */
+}
+
+#contentContainer img, 
+#contentContainer svg {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  display: block;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+}
+
+/* Code block styling (Prism.js) */
+#contentContainer pre,
+#contentContainer pre[class*="language-"] {
+  font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.6;
+  padding: 1.25rem;
+  margin: 1.75rem 0;
+  overflow: auto;
+  border-radius: 0.5rem; /* rounded-lg */
+  background-color: #0f172a; /* slate-900, dark background */
+  color: #e2e8f0; /* slate-200, light text */
+  border: 1px solid #334155; /* slate-700 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#contentContainer code:not(pre code),
+#contentContainer code[class*="language-"]:not(pre code) { /* Inline code */
+  font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.875em;
+  background-color: #e0f2fe; /* primary-100 */
+  color: #0284c7; /* primary-600 */
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  border: 1px solid #bae6fd; /* primary-200 */
+}
+
+/* Prism.js token styles (custom theme, example) */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #94a3b8; /* slate-400 */
+}
+
+.token.punctuation {
+  color: #94a3b8; /* slate-400 */
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f472b6; /* pink-400 */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a5b4fc; /* indigo-300 */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #67e8f9; /* cyan-300 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #818cf8; /* indigo-400 */
+}
+
+.token.function,
+.token.class-name {
+  color: #fcd34d; /* amber-300 */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fb923c; /* orange-400 */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.entity {
+  cursor: help;
+}
+
+/* Scroll to top button */
+#scrollToTopBtn {
+  transition-property: opacity, transform;
+}
+#scrollToTopBtn.opacity-100 {
+    opacity: 1;
+}
+#scrollToTopBtn.translate-y-0 {
+    transform: translateY(0);
+}
