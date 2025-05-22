@@ -1,0 +1,76 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .node { fill: #c8e6c9; stroke: #388e3c; stroke-width: 2; }
+    .llm { fill: #e1bee7; stroke: #8e24aa; stroke-width: 2; }
+    .kb { fill: #fff9c4; stroke: #fbc02d; stroke-width: 2; }
+    .connector { fill: none; stroke: #1b5e20; stroke-width: 2; marker-end: url(#arrowhead); }
+    .dashed-connector { fill: none; stroke: #1b5e20; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead); }
+    .text { font-family: sans-serif; font-size: 12px; text-anchor: middle; dominant-baseline: central; fill: #212121; }
+    .label { font-family: sans-serif; font-size: 10px; text-anchor: middle; dominant-baseline: central; fill: #424242; }
+     #arrowhead { fill: #1b5e20; stroke: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" orient="auto" markerWidth="8" markerHeight="8" refX="7" refY="4">
+      <path d="M0,0 L8,4 L0,8 Z" />
+    </marker>
+  </defs>
+
+  <!-- User Input -->
+  <rect class="node" x="50" y="170" width="100" height="60" rx="10"/>
+  <text class="text" x="100" y="200">用户输入</text>
+  <text class="label" x="100" y="240">感知 (Perception)</text>
+
+
+  <!-- NLU -->
+  <rect class="node" x="200" y="170" width="120" height="60" rx="10"/>
+  <text class="text" x="260" y="195">自然语言理解</text>
+  <text class="text" x="260" y="215">(NLU)</text>
+
+  <!-- Agent Logic/Controller -->
+  <rect class="node" x="370" y="100" width="140" height="120" rx="10"/>
+  <text class="text" x="440" y="150">Agent 核心逻辑</text>
+    <text class="text" x="440" y="170">(Controller)</text>
+  <text class="label" x="440" y="230">决策 (Decision-Making)</text>
+
+
+  <!-- Knowledge Base/Retriever -->
+  <rect class="kb" x="600" y="50" width="140" height="80" rx="10"/>
+  <text class="text" x="670" y="80">知识库/检索器</text>
+    <text class="text" x="670" y="100">(Knowledge Base/Retriever)</text>
+
+
+  <!-- LLM -->
+  <rect class="llm" x="600" y="170" width="140" height="80" rx="10"/>
+  <text class="text" x="670" y="200">大型语言模型</text>
+    <text class="text" x="670" y="220">(LLM)</text>
+
+  <!-- Response Generation -->
+   <rect class="node" x="370" y="280" width="140" height="60" rx="10"/>
+  <text class="text" x="440" y="310">回复生成/输出</text>
+  <text class="label" x="440" y="350">行动 (Action)</text>
+
+
+  <!-- Connectors -->
+  <path class="connector" d="M150,200 L200,200"/> <!-- User Input to NLU -->
+  <path class="connector" d="M320,200 L370,180"/> <!-- NLU to Agent Logic -->
+
+  <path class="connector" d="M510,160 L600,110"/> <!-- Agent Logic to Retriever -->
+  <path class="connector" d="M510,180 L600,210"/> <!-- Agent Logic to LLM -->
+
+  <path class="connector" d="M740,210 L510,190"/> <!-- LLM to Agent Logic -->
+  <path class="connector" d="M740,90 L510,170"/> <!-- Retriever to Agent Logic -->
+
+
+  <path class="connector" d="M440,220 L440,280"/> <!-- Agent Logic to Response Generation -->
+
+  <path class="connector" d="M440,340 L100,230 C100,230 100,180 100,180" marker-end=" url(#arrowhead)" style="stroke: #1b5e20; stroke-width: 2; fill: none;"/> <!-- Response Generation to User (implicit feedback/next turn) -->
+    <text class="label" x="100" y="150">环境 (用户)</text>
+
+
+    <!-- Optional: Memory -->
+    <rect class="node" x="200" y="280" width="120" height="60" rx="10"/>
+    <text class="text" x="260" y="310">记忆 (Memory)</text>
+    <path class="dashed-connector" d="M370,290 L320,310"/>
+     <path class="dashed-connector" d="M320,310 L260,310 C260,310 260,240 370,200"/>
+</svg>
+
