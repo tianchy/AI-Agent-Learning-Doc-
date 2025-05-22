@@ -1,20 +1,28 @@
 // Utility functions
 
 async function fetchTextContent(url) {
+    console.log(`Fetching content from: ${url}`);
     try {
         const response = await fetch(url);
+        console.log(`Response status: ${response.status}`);
+        
         if (!response.ok) {
             if (response.status === 404) {
-                console.warn(`Content file not found: ${url}`);
+                console.error(`Content file not found: ${url}`);
                 return `## Content Not Found\n\nThe file \`${url}\` could not be loaded. Please check the path.`;
             }
             throw new Error(`HTTP error! status: ${response.status} for ${url}`);
         }
+        
         const text = await response.text();
+        console.log(`Content length: ${text.length} characters`);
+        console.log(`Content preview: ${text.substring(0, 100)}...`);
+        
         if (!text || typeof text !== 'string') {
             console.error(`Invalid content from ${url}:`, text);
             return `## Error Loading Content\n\nInvalid content format from \`${url}\`.`;
         }
+        
         return text;
     } catch (error) {
         console.error(`Error fetching ${url}:`, error);
@@ -97,10 +105,18 @@ function parseMarkdown(text) {
         // 使用try-catch包装marked.parse调用
         let htmlContent;
         try {
+            console.log('Parsing markdown content...');
+            console.log('Content preview:', preProcessedContent.substring(0, 100));
+            
             htmlContent = marked.parse(preProcessedContent);
+            
             if (!htmlContent || typeof htmlContent !== 'string') {
                 throw new Error('Marked parser returned invalid output');
             }
+            
+            console.log('Markdown parsing successful');
+            console.log('HTML preview:', htmlContent.substring(0, 100));
+            
         } catch (parseError) {
             console.error('Error in marked.parse:', parseError);
             return { metadata: {}, content: `<p class="text-red-500">Error parsing markdown content: ${parseError.message}</p>` };

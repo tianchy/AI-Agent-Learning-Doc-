@@ -30,6 +30,13 @@ async function loadAndProcessAllContent() {
 
         try {
             console.log(`Loading content for section: ${section.id}`);
+            
+            // 检查文件是否存在
+            const response = await fetch(section.file, { method: 'HEAD' });
+            if (!response.ok) {
+                throw new Error(`File not found: ${section.file}`);
+            }
+            
             const rawText = await fetchTextContent(section.file);
             
             if (!rawText || typeof rawText !== 'string') {
