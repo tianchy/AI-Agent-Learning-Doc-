@@ -224,6 +224,19 @@
         <span class="material-icons">arrow_upward</span>
     </button>
 
+    <script>
+        // 确保marked库被正确初始化
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({
+                gfm: true,
+                breaks: true,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false
+            });
+        }
+    </script>
     <script src="utils.js"></script>
     <script src="components.js"></script>
     <script src="illustrations.js"></script>

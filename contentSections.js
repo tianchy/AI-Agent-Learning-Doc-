@@ -29,20 +29,26 @@ async function loadAndProcessAllContent() {
         contentContainer.innerHTML = '<p class="text-center py-10 text-gray-500">Loading content...</p>';
 
         try {
+            console.log(`Loading content for section: ${section.id}`);
             const rawText = await fetchTextContent(section.file);
+            
             if (!rawText || typeof rawText !== 'string') {
                 throw new Error(`Invalid content format for ${section.file}`);
             }
 
+            console.log(`Parsing markdown for section: ${section.id}`);
             const { metadata, content: htmlContent } = parseMarkdown(rawText);
+            
             if (!htmlContent || typeof htmlContent !== 'string') {
                 throw new Error(`Failed to parse markdown for ${section.file}`);
             }
 
+            console.log(`Setting content for section: ${section.id}`);
             contentContainer.innerHTML = htmlContent;
 
             // 确保内容加载后再处理特殊元素
             if (contentContainer.innerHTML.trim()) {
+                console.log(`Processing special elements for section: ${section.id}`);
                 processKeyConceptCards(contentContainer);
                 processSVGDiagrams(contentContainer);
             } else {
