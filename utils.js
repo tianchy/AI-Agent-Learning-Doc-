@@ -34,6 +34,12 @@ function parseMarkdown(text) {
     }
 
     try {
+        // 确保marked库已正确初始化
+        if (typeof marked.parse !== 'function') {
+            console.error('Marked library is not properly initialized');
+            return { metadata: {}, content: '<p class="text-red-500">Error: Markdown parser is not properly initialized.</p>' };
+        }
+
         let markdownContent = text;
         if (text.startsWith('---')) {
             const parts = text.split('---');
@@ -76,6 +82,7 @@ function parseMarkdown(text) {
             return `<blockquote>${quote}</blockquote>\n`;
         }
 
+        // 设置marked选项
         marked.setOptions({
             gfm: true,
             breaks: true, 
@@ -87,7 +94,18 @@ function parseMarkdown(text) {
             renderer: renderer
         });
 
-        const htmlContent = marked.parse(preProcessedContent);
+        // 使用try-catch包装marked.parse调用
+        let htmlContent;
+        try {
+            htmlContent = marked.parse(preProcessedContent);
+            if (!htmlContent || typeof htmlContent !== 'string') {
+                throw new Error('Marked parser returned invalid output');
+            }
+        } catch (parseError) {
+            console.error('Error in marked.parse:', parseError);
+            return { metadata: {}, content: `<p class="text-red-500">Error parsing markdown content: ${parseError.message}</p>` };
+        }
+
         return { metadata: {}, content: htmlContent };
     } catch (error) {
         console.error('Error parsing markdown:', error);

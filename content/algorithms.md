@@ -1,4 +1,43 @@
-*代码：DFS 查找路径示例（Python，递归实现）*
+# 2. 核心算法基础
+
+本章将深入探讨 AI Agent 开发中的核心算法基础，包括搜索算法、规划算法、机器学习算法、强化学习算法以及自然语言处理算法。这些算法是构建智能 Agent 的基石，理解它们对于开发高效的 AI Agent 至关重要。
+
+## 2.1 搜索算法
+
+搜索算法是 AI Agent 在解决问题时寻找解决方案的基本方法。它们帮助 Agent 在可能的状态空间中寻找从初始状态到目标状态的路径。
+
+### 2.1.1 无信息搜索
+
+无信息搜索算法不利用任何关于目标位置或路径成本的信息，仅依靠问题定义进行搜索。
+
+*   **广度优先搜索 (BFS)**：
+    *   原理：从起始节点开始，逐层扩展所有可能的节点，直到找到目标节点。
+    *   特性：完备性（如果存在解，一定能找到）；最优性（在边权相等的情况下找到最短路径）。
+    *   适用场景：寻找最短路径；状态空间较小的问题。
+
+*   **深度优先搜索 (DFS)**：
+    *   原理：从起始节点开始，沿着一条路径一直搜索到最深，然后回溯继续搜索。
+    *   特性：不完备（可能陷入无限循环）；不保证最优解；空间复杂度较低。
+    *   适用场景：状态空间较大；只需要找到一个解；深度优先的搜索策略更合适。
+
+*   **统一成本搜索 (UCS)**：
+    *   原理：按照路径成本递增的顺序扩展节点，保证找到最低成本路径。
+    *   特性：完备性；最优性（找到最低成本路径）。
+    *   适用场景：带权图的最短路径问题。
+
+### 2.1.2 启发式搜索
+
+启发式搜索利用问题相关的信息来指导搜索方向，提高搜索效率。
+
+*   **贪婪最佳优先搜索**：
+    *   原理：总是选择启发式函数值最小的节点进行扩展。
+    *   特性：不完备；不保证最优解；但通常能找到较好的解。
+    *   适用场景：需要快速找到可行解的问题。
+
+*   **A* 搜索**：
+    *   原理：结合统一成本搜索和贪婪最佳优先搜索的优点，使用评估函数 f(n) = g(n) + h(n)。
+    *   特性：完备性；在启发式函数可接受的情况下保证最优解。
+    *   适用场景：需要找到最优解的问题，如路径规划、游戏 AI 等。
 
 #### 2.1.4 A\* 搜索
 
@@ -42,7 +81,7 @@
         *   Effects：执行该动作后环境发生Changes。usually 分为添加列表 (Add List) 和删除列表 (Delete List)，表示动作执行后 which propositions becomes True，which become False。
 
 *   应用示例：
-    Consider a simple “move block” world.
+    Consider a simple "move block" world.
     *   状态：可以用一系列 proposition 描述，如 `On(A, Table)`, `On(B, C)`, `Clear(B)`, `HandEmpty`.
     *   动作：例如 `Stack(x, y)`（将积木 x 堆叠在积木 y 上）。
         *   `Preconditions`: `Clear(x)`, `Clear(y)`, `HandEmpty`
@@ -65,13 +104,13 @@
     *   复合任务 (Compound Task)：需要通过 分解（应用 方法）才能完成的 复杂 task。
 
 *   HTN 规划 的优势（更强的 Expression Capacity、可 编码 specific Problem Solving Strategy）：
-    *   更强的表达能力：HTN 不仅能表达 “要做 什么”，还能表达 “如何 做”，通过 方法 可以 encoding Domain Specific Problem Solving Strategy 和 Work Flow，This is Difficult for STRIPS/PDDL to achieve。
-    *   可 Encoding Specific Problem Solving Strategy：例如，在制造领域， એક “어세ম্ব리 제품” 타겟 复合 task 可以通过 不同 的 方法 분해，Correspond to different manufacturing processes。Planner Will generate behavior sequence based on methods definition。
+    *   更强的表达能力：HTN 不仅能表达 "要做 什么"，还能表达 "如何 做"，通过 方法 可以 encoding Domain Specific Problem Solving Strategy 和 Work Flow，This is Difficult for STRIPS/PDDL to achieve。
+    *   可 Encoding Specific Problem Solving Strategy：例如，在制造领域， એક "어세ম্ব리 제품" 타겟 复合 task 可以通过 不同 的 方法 분해，Correspond to different manufacturing processes。Planner Will generate behavior sequence based on methods definition。
     *   更接近 人类规划方法：人类解决 复杂 问题 时，typically 也 是 먼저 Make outline， Then逐步细化。
 
 *   与 STRIPS/经典 规划 의 Contrast analysis：
     *   klassisch 规划 (STRIPS/PDDL) 是 trạng thái không gian tìm kiếm，从 trạng thái ban đầu 至 Estado Target。HTN 规划是 Task Không Gian Tìm Kiếm，从 复合 Task 至 原始 Task。
-    *   klassisch 规划 tìm 是 어떤 能 Reach Target 的 Sequence，不 quan 心 “如何 做”；HTN 规划 tìm 是 Conform predetermined “方法” 的 Task decomposition 和 실행 Sequence。
+    *   klassisch 规划 tìm 是 어떤 能 Reach Target 的 Sequence，不 quan 心 "如何 做"；HTN 规划 tìm 是 Conform predetermined "方法" 的 Task decomposition 和 실행 Sequence。
     *   HTN Expression 能力 更强，可以 biểu 현 klassisch 规划 不能 biểu 현 的 일 부 Constraints 或 선호 사항，But May Be More Difficult To Solve。HTN 规划在 సాధారణ 상황 下 是 不定 的。
 
 在 현대 AI Agent 中，规划算法 可能 与 Machine Learning 结合 使用，例如，LLMs 의 task 分解 Ability carries Some Ideas from HTN Planning，而且 강화 학습 可以 用于 최적화 Planning 프로세스 或者 실행 Planned hành động。
